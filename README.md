@@ -1,5 +1,5 @@
 # Senku AppFactory ⚡
-
+https://senku-app-factory.vercel.app/
 Welcome to **Senku AppFactory** (managed by **Bader Alkorgli**). This is a professional Agent-native system designed to build high-performance applications with a Neon aesthetic.
 
 ## 🛠 Project Components
