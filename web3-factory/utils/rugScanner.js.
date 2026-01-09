@@ -1,0 +1,38 @@
+/**
+ * Senku Rug Checker Logic
+ * Developed by: Bader Alkorgli
+ */
+
+export const performRugCheck = async (tokenMint) => {
+    const API_URL = `https://api.dexscreener.com/latest/dex/tokens/${tokenMint}`;
+    
+    try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        
+        if (!data.pairs || data.pairs.length === 0) {
+            return { status: "danger", message: "No Liquidity Found!" };
+        }
+
+        const pair = data.pairs[0];
+        const liquidity = pair.liquidity.usd;
+
+        // Simple Global Validation Logic
+        if (liquidity < 5000) {
+            return { 
+                status: "warning", 
+                message: "Low Liquidity Detected (Potential Rug)",
+                value: liquidity 
+            };
+        }
+
+        return { 
+            status: "safe", 
+            message: "Liquidity is Stable",
+            value: liquidity 
+        };
+
+    } catch (error) {
+        return { status: "error", message: "Scanner Failed" };
+    }
+};
