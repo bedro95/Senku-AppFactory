@@ -2,129 +2,151 @@ import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 
 /**
- * PROJECT: SENKU APP-FACTORY (PRO EDITION)
- * DESIGN SYNC: SENKU V1
+ * PROJECT: SENKU NEURAL-CORE 2050
+ * STATUS: ULTRA-FUTURISTIC INTERFACE
  * DEVELOPER: Bader Alkorgli
  */
 
-export default function SenkuUltimateFactory() {
+export default function Senku2050() {
   const [address, setAddress] = useState("");
   const [isScanning, setIsScanning] = useState(false);
+  const [scanProgress, setScanProgress] = useState(0);
   const [result, setResult] = useState(null);
-  const [agentMsg, setAgentMsg] = useState("Analyzing neural signals...");
 
-  // نظام الرسائل الخاص بالـ Agent
+  // تأثير التقدم في المسح (Neural Loading)
   useEffect(() => {
-    const tips = ["Paste a Solana address to begin neural scan", "Always scan contracts before ape", "Follow smart money not noise"];
-    const interval = setInterval(() => {
-      setAgentMsg(tips[Math.floor(Math.random() * tips.length)]);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
+    if (isScanning) {
+      const interval = setInterval(() => {
+        setScanProgress(prev => (prev < 100 ? prev + 1 : 100));
+      }, 30);
+      return () => clearInterval(interval);
+    } else {
+      setScanProgress(0);
+    }
+  }, [isScanning]);
 
-  const handleScan = () => {
+  const startNeuralScan = () => {
     if (!address) return;
     setIsScanning(true);
+    setResult(null);
     setTimeout(() => {
       setResult({
-        score: Math.floor(Math.random() * 20) + 80,
-        liquidity: "LOCKED (99.2%)",
-        mint: "DISABLED",
-        riskLevel: "LOW",
-        status: "SAFE_GRAIL"
+        TRUST_INDEX: "99.8%",
+        NEURAL_MATCH: "STABLE",
+        LIQUIDITY: "DEEP-LOCKED",
+        THREAT_LEVEL: "ZERO",
+        ENTITY: "VERIFIED"
       });
       setIsScanning(false);
-    }, 2500);
+    }, 3500);
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] text-white flex flex-col items-center p-4 md:p-8 font-sans overflow-hidden relative selection:bg-green-500/30">
+    <div className="min-h-screen bg-[#02040a] text-green-500 font-mono overflow-hidden relative selection:bg-green-500/30">
       <Head>
-        <title>SENKU | Neural Factory Protocol</title>
+        <title>SENKU | NEURAL INTERFACE 2050</title>
       </Head>
 
-      {/* BACKGROUND - MATCHING SENKU.FUN */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(34,197,94,0.12),transparent_70%)] z-10" />
-        <img
-          src="https://senku.fun/senku.GIF"
-          className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale contrast-125 pointer-events-none"
-          alt="Background"
-        />
+      {/* 🌌 Cyber Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        {/* Animated Grid */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#166534_1px,transparent_1px),linear-gradient(to_bottom,#166534_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20" />
+        
+        {/* Glowing Orbs */}
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-green-900/20 blur-[120px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/20 blur-[120px] rounded-full animate-pulse" />
       </div>
 
-      {/* SNOW SYSTEM (CSS ONLY) */}
-      <style jsx global>{`
-        @keyframes snow { 0% { transform: translateY(-10vh); } 100% { transform: translateY(110vh); } }
-        .snow { position: absolute; background: white; border-radius: 50%; opacity: 0.3; animation: snow linear infinite; pointer-events: none; }
-      `}</style>
-      {[...Array(20)].map((_, i) => (
-        <div key={i} className="snow" style={{
-          width: '2px', height: '2px', left: `${Math.random() * 100}%`,
-          top: '-10px', animationDuration: `${Math.random() * 5 + 7}s`,
-          animationDelay: `${Math.random() * 5}s`
-        }} />
-      ))}
+      {/* 🧪 Main Interface */}
+      <main className="relative z-10 flex flex-col items-center justify-center min-h-screen p-6">
+        
+        {/* Floating Scan ID */}
+        <div className="absolute top-10 left-10 text-[10px] tracking-[0.3em] opacity-50 hidden md:block">
+          SYSTEM_STATUS: <span className="text-green-400">OPTIMIZED</span><br />
+          NEURAL_LINK: <span className="text-green-400">ACTIVE</span>
+        </div>
 
-      {/* MAIN CONTENT */}
-      <main className="relative z-10 w-full max-w-6xl flex flex-col items-center flex-grow justify-center mt-[-5vh]">
-        <div className="text-center mb-12">
-          {/* 🔥 THE FAMOUS SENKU LOGO STYLE */}
-          <h1 className="text-[14vw] sm:text-[12vw] md:text-[9rem] lg:text-[10rem] font-[1000] italic tracking-tighter leading-none bg-gradient-to-b from-white via-white to-green-500 bg-clip-text text-transparent drop-shadow-2xl select-none px-4">
+        {/* 💠 Futuristic Title Section */}
+        <div className="relative group mb-16">
+          <h1 className="text-[18vw] md:text-[12rem] font-black italic tracking-tighter leading-none text-white mix-blend-difference drop-shadow-[0_0_30px_rgba(34,197,94,0.3)]">
             SENKU
           </h1>
-          <p className="text-[10px] font-mono tracking-[1.5em] text-green-400 uppercase opacity-80 mt-2">
-            Neural Scientific Protocol
-          </p>
+          <div className="absolute -bottom-4 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-green-500 to-transparent shadow-[0_0_15px_#22c55e]" />
+          <div className="mt-4 flex justify-between text-[8px] tracking-[1em] uppercase text-green-400 font-bold">
+            <span>Neural</span>
+            <span>Protocol</span>
+            <span>2050</span>
+          </div>
         </div>
 
-        {/* SCAN INPUT - MATCHING DESIGN */}
-        <div className="w-full max-w-xl mx-auto flex flex-col md:flex-row gap-2">
-          <input
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="Enter token address"
-            className="flex-1 bg-black/60 border border-white/10 rounded-xl px-4 py-4 text-sm outline-none focus:border-green-500 transition-colors font-mono"
-          />
-          <button
-            onClick={handleScan}
-            disabled={isScanning}
-            className={`${
-              isScanning ? "bg-green-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-400"
-            } text-black px-8 py-4 rounded-xl text-sm font-bold transition-all active:scale-95`}
-          >
-            {isScanning ? "SCANNING..." : "SCAN"}
-          </button>
+        {/* 🖥️ The Control Console */}
+        <div className="w-full max-w-2xl bg-black/40 backdrop-blur-2xl border border-green-500/20 rounded-0 p-1 relative overflow-hidden shadow-[0_0_50px_rgba(0,0,0,1)]">
+          {/* Corner Accents */}
+          <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-green-500" />
+          <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-green-500" />
+
+          <div className="p-8 space-y-6">
+            <div className="relative">
+              <input
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder=">>> DEPLOY CONTRACT ADDRESS_"
+                className="w-full bg-black/60 border border-green-900/50 py-5 px-6 outline-none focus:border-green-400 text-green-400 placeholder:text-green-900 transition-all font-mono text-sm tracking-widest"
+              />
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-1">
+                <div className="w-1 h-4 bg-green-500/20 animate-bounce" />
+                <div className="w-1 h-4 bg-green-500/40 animate-bounce [animation-delay:0.2s]" />
+                <div className="w-1 h-4 bg-green-500/60 animate-bounce [animation-delay:0.4s]" />
+              </div>
+            </div>
+
+            <button
+              onClick={startNeuralScan}
+              disabled={isScanning}
+              className="w-full group relative overflow-hidden bg-green-500 text-black py-5 font-black uppercase tracking-[0.5em] text-xs transition-all active:scale-[0.98]"
+            >
+              <span className="relative z-10">{isScanning ? `ANALYZING ${scanProgress}%` : "INITIALIZE NEURAL BREACH"}</span>
+              <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+            </button>
+          </div>
+
+          {/* Progress Bar */}
+          {isScanning && (
+            <div className="h-1 bg-green-900 w-full overflow-hidden">
+              <div className="h-full bg-green-400 shadow-[0_0_15px_#22c55e] transition-all duration-100" style={{ width: `${scanProgress}%` }} />
+            </div>
+          )}
         </div>
 
-        {/* RESULTS - MATCHING THE GRID */}
+        {/* 📊 Neural Data Readout */}
         {result && (
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-5 gap-4 w-full">
-            {Object.entries(result).map(([key, value]) => (
-              <div key={key} className="bg-black/50 border border-white/10 rounded-xl p-4 text-center backdrop-blur-md">
-                <p className="text-[9px] uppercase tracking-widest text-white/40 mb-2">{key}</p>
-                <p className="font-bold text-green-400 text-sm tracking-tight">{String(value)}</p>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-5 gap-1 w-full max-w-4xl">
+            {Object.entries(result).map(([k, v]) => (
+              <div key={k} className="bg-green-500/5 border border-green-500/10 p-4 relative group hover:bg-green-500/10 transition-all">
+                <p className="text-[7px] text-green-700 font-bold mb-1 tracking-tighter">{k}</p>
+                <p className="text-xs font-black text-white">{v}</p>
+                <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-green-400 group-hover:w-full transition-all duration-500" />
               </div>
             ))}
           </div>
         )}
       </main>
 
-      {/* SENKU AGENT - DIRECT LINK */}
-      <div className="fixed bottom-6 right-6 z-[999] flex items-end gap-3 pointer-events-none">
-        <img
-          src="https://senku.fun/senku.GIF"
-          alt="Senku Agent"
-          className="w-20 h-20 rounded-2xl border border-green-500/30 bg-black/70 backdrop-blur-xl shadow-2xl"
-        />
-        <div className="max-w-[220px] bg-black/80 border border-green-500/30 rounded-2xl px-4 py-3 text-[10px] font-mono text-green-400 uppercase tracking-widest shadow-xl">
-          {agentMsg}
+      {/* 🤖 The 2050 Agent */}
+      <div className="fixed bottom-10 right-10 flex flex-col items-end gap-4 z-50">
+        <div className="bg-black/80 border-r-2 border-green-500 p-4 backdrop-blur-xl max-w-[200px] shadow-2xl">
+          <p className="text-[9px] leading-relaxed tracking-wider">
+            <span className="text-green-300 font-bold">SENKU_AI:</span> {isScanning ? "Diverting power to neural processors..." : "Ready for next instruction, Bader."}
+          </p>
+        </div>
+        <div className="relative">
+          <img src="https://senku.fun/senku.GIF" className="w-24 h-24 border border-green-500/30 grayscale hover:grayscale-0 transition-all duration-700 shadow-[0_0_30px_rgba(34,197,94,0.2)]" />
+          <div className="absolute inset-0 border-2 border-green-500/20 animate-ping rounded-full scale-75" />
         </div>
       </div>
 
-      {/* FOOTER */}
-      <footer className="relative z-10 mt-16 mb-6 text-center text-[10px] text-white/40 tracking-[0.8em] uppercase">
-        © 2026 SENKU PROTOCOL — Powered by Bader
+      <footer className="fixed bottom-4 left-1/2 -translate-x-1/2 text-[8px] tracking-[1.5em] opacity-30 pointer-events-none uppercase">
+        Senku Neural OS v9.0 // Bader Alkorgli
       </footer>
     </div>
   );
