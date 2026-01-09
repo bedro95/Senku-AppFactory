@@ -37,7 +37,7 @@ export default function RugCheckerUI() {
 
   return (
     <div style={{ background: 'rgba(0, 20, 0, 0.8)', padding: '30px', borderRadius: '20px', border: '1px solid #00ff00', width: '90%', maxWidth: '500px', boxShadow: '0 0 20px #00ff0033' }}>
-      <h2 style={{ color: '#00ff00', textAlign: 'center', marginBottom: '20px', fontFamily: 'monospace' }}>NEURAL SCANNER</h2>
+      <h2 style={{ color: '#00ff00', textAlign: 'center', marginBottom: '20px', fontFamily: 'monospace' }}>SENKU SCANNER</h2>
       
       <input 
         value={address}
