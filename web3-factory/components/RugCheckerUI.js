@@ -12,59 +12,69 @@ export default function RugCheckerUI() {
     setData(null);
 
     try {
-      // الاتصال بمحرك البيانات الحقيقي (DexScreener API)
       const res = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${address}`);
       const pair = res.data.pairs ? res.data.pairs[0] : null;
 
       if (pair) {
         setData({
-          name: pair.baseToken.name + " (" + pair.baseToken.symbol + ")",
-          price: "$" + pair.priceUsd,
-          liquidity: "$" + pair.liquidity.usd.toLocaleString(),
-          volume: "$" + pair.volume.h24.toLocaleString(),
-          mCap: "$" + (pair.fdv ? pair.fdv.toLocaleString() : "N/A"),
-          status: "VERIFIED_ON_CHAIN"
+          name: pair.baseToken.name,
+          symbol: pair.baseToken.symbol,
+          price: pair.priceUsd,
+          liquidity: pair.liquidity.usd.toLocaleString(),
+          status: "SAFE_NEURAL_CHECK"
         });
       } else {
-        setData({ status: "NO_DATA_FOUND", details: "Token exists but no active liquidity pairs found." });
+        setData({ status: "NO_DATA", details: "Check address again." });
       }
     } catch (err) {
-      alert("Neural Link Error: Connection timed out.");
+      alert("Neural Link Error.");
     } finally {
       setLoading(false);
     }
   };
 
+  // --- ميزة المشاركة على تويتر ---
+  const shareOnTwitter = () => {
+    const text = `🧪 SENKU FACTORY SCAN REPORT:\n\n💎 Token: ${data.name} ($${data.symbol})\n💰 Liquidity: $${data.liquidity}\n🛡️ Status: ${data.status}\n\nScan your tokens here:`;
+    const url = "https://senku-app-factory.vercel.app/";
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    window.open(twitterUrl, '_blank');
+  };
+
   return (
-    <div style={{ background: 'rgba(0, 20, 0, 0.8)', padding: '30px', borderRadius: '20px', border: '1px solid #00ff00', width: '90%', maxWidth: '500px', boxShadow: '0 0 20px #00ff0033' }}>
-      <h2 style={{ color: '#00ff00', textAlign: 'center', marginBottom: '20px', fontFamily: 'monospace' }}>SENKU SCANNER</h2>
+    <div style={{ background: 'rgba(0, 5, 0, 0.9)', padding: '30px', borderRadius: '24px', border: '1px solid #00ff00', width: '95%', maxWidth: '500px', boxShadow: '0 0 40px rgba(0,255,0,0.1)' }}>
+      <h2 style={{ color: '#00ff00', textAlign: 'center', marginBottom: '25px', fontFamily: 'monospace', textShadow: '0 0 10px #00ff00', letterSpacing: '4px' }}>SENKU FACTORY</h2>
       
-      <input 
-        value={address}
-        onChange={(e) => setAddress(e.target.value)}
-        placeholder="Enter Solana Contract..."
-        style={{ width: '100%', padding: '12px', background: '#000', border: '1px solid #00ff00', color: '#00ff00', outline: 'none', marginBottom: '10px' }}
-      />
+      <div style={{ marginBottom: '20px' }}>
+        <input 
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder="ENTER CONTRACT ADDRESS..."
+          style={{ width: '100%', padding: '15px', background: '#000', border: '1px solid #114411', color: '#00ff00', outline: 'none', borderRadius: '12px', fontSize: '12px', fontFamily: 'monospace' }}
+        />
+      </div>
       
       <button 
         onClick={performScan}
         disabled={loading}
-        style={{ width: '100%', padding: '12px', background: '#00ff00', color: '#000', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}
+        style={{ width: '100%', padding: '15px', background: '#00ff00', color: '#000', fontWeight: '900', border: 'none', cursor: 'pointer', borderRadius: '12px', textTransform: 'uppercase', letterSpacing: '2px', transition: '0.3s' }}
       >
-        {loading ? "SCANNING CORE..." : "EXECUTE SCAN"}
+        {loading ? "ANALYZING..." : "SENKU SCAN"}
       </button>
 
-      {data && (
-        <div style={{ marginTop: '20px', color: '#fff', fontSize: '14px', fontFamily: 'monospace' }}>
-          <div style={{ borderBottom: '1px solid #333', padding: '5px 0' }}>STATUS: <span style={{ color: '#00ff00' }}>{data.status}</span></div>
-          {data.name && (
-            <>
-              <div style={{ borderBottom: '1px solid #333', padding: '5px 0' }}>TOKEN: {data.name}</div>
-              <div style={{ borderBottom: '1px solid #333', padding: '5px 0' }}>LIQUIDITY: {data.liquidity}</div>
-              <div style={{ borderBottom: '1px solid #333', padding: '5px 0' }}>MCAP: {data.mCap}</div>
-              <div style={{ borderBottom: '1px solid #333', padding: '5px 0' }}>PRICE: {data.price}</div>
-            </>
-          )}
+      {data && data.name && (
+        <div style={{ marginTop: '25px', background: 'rgba(0,255,0,0.05)', padding: '20px', borderRadius: '16px', border: '1px border-style:dashed #00ff0033' }}>
+          <div style={{ marginBottom: '10px', fontSize: '14px' }}><span style={{ color: '#00ff00' }}>[ENTITY]:</span> {data.name} (${data.symbol})</div>
+          <div style={{ marginBottom: '10px', fontSize: '14px' }}><span style={{ color: '#00ff00' }}>[LIQUIDITY]:</span> ${data.liquidity}</div>
+          <div style={{ marginBottom: '20px', fontSize: '14px' }}><span style={{ color: '#00ff00' }}>[STATUS]:</span> {data.status}</div>
+          
+          {/* زر المشاركة الجديد */}
+          <button 
+            onClick={shareOnTwitter}
+            style={{ width: '100%', padding: '10px', background: 'transparent', color: '#1DA1F2', fontWeight: 'bold', border: '1px solid #1DA1F2', cursor: 'pointer', borderRadius: '10px', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+          >
+            𝕏 SHARE REPORT ON TWITTER
+          </button>
         </div>
       )}
     </div>
