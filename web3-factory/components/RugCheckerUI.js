@@ -6,7 +6,6 @@ export default function RugCheckerUI() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
 
-  // دالة الفحص الحقيقي من سولانا باستخدام محرك Senku Factory
   const performScan = async () => {
     if (!address || address.length < 32) {
       alert("Please enter a valid Solana contract address.");
@@ -21,13 +20,13 @@ export default function RugCheckerUI() {
       const pair = res.data.pairs ? res.data.pairs[0] : null;
 
       if (pair) {
-        // تخزين البيانات للتأكد من ظهورها في واجهة Senku Factory والمشاركة
         setData({
           name: pair.baseToken.name,
           symbol: pair.baseToken.symbol,
           price: pair.priceUsd,
           liquidity: pair.liquidity.usd.toLocaleString(),
-          volume: pair.volume.h24.toLocaleString(),
+          mCap: pair.fdv ? pair.fdv.toLocaleString() : "N/A", // جلب الماركت كاب
+          ca: address, // حفظ الـ CA للمشاركة
           status: "SAFE_SENKU_CHECK"
         });
       } else {
@@ -46,11 +45,21 @@ export default function RugCheckerUI() {
     }
   };
 
-  // دالة المشاركة على تويتر باسم Senku Factory
   const shareOnTwitter = () => {
     if (!data || data.status === "ERROR") return;
 
-    const text = `🧪 SENKU FACTORY REPORT:\n\n💎 Token: ${data.name} ($${data.symbol})\n💰 Liquidity: $${data.liquidity}\n🛡️ Status: ${data.status}\n\nScan securely at:`;
+    // تم إضافة الـ CA والـ Market Cap هنا للرسالة
+    const text = `🧪 SENKU FACTORY REPORT:
+
+💎 Token: ${data.name} ($${data.symbol})
+📊 Market Cap: $${data.mCap}
+💰 Liquidity: $${data.liquidity}
+🛡️ Status: ${data.status}
+
+📝 CA: ${data.ca}
+
+Scan securely at:`;
+
     const url = "https://senku-app-factory.vercel.app/";
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
     window.open(twitterUrl, '_blank');
@@ -67,7 +76,6 @@ export default function RugCheckerUI() {
       boxShadow: '0 0 50px rgba(0,255,0,0.15)',
       fontFamily: 'monospace'
     }}>
-      {/* العنوان المحدث */}
       <h2 style={{ 
         color: '#00ff00', 
         textAlign: 'center', 
@@ -79,7 +87,6 @@ export default function RugCheckerUI() {
         SENKU FACTORY
       </h2>
       
-      {/* حقل الإدخال */}
       <div style={{ marginBottom: '15px' }}>
         <input 
           value={address}
@@ -99,7 +106,6 @@ export default function RugCheckerUI() {
         />
       </div>
       
-      {/* زر الفحص */}
       <button 
         onClick={performScan}
         disabled={loading}
@@ -120,7 +126,6 @@ export default function RugCheckerUI() {
         {loading ? "SCANNING CORE..." : "EXECUTE SENKU SCAN"}
       </button>
 
-      {/* منطقة النتائج الفعالة */}
       {data && (
         <div style={{ 
           marginTop: '25px', 
@@ -135,7 +140,7 @@ export default function RugCheckerUI() {
                 <span style={{ color: '#00ff00' }}>[ENTITY]:</span> {data.name} ({data.symbol})
               </div>
               <div style={{ marginBottom: '12px', fontSize: '13px', color: '#fff' }}>
-                <span style={{ color: '#00ff00' }}>[PRICE]:</span> ${data.price}
+                <span style={{ color: '#00ff00' }}>[MARKET CAP]:</span> ${data.mCap}
               </div>
               <div style={{ marginBottom: '12px', fontSize: '13px', color: '#fff' }}>
                 <span style={{ color: '#00ff00' }}>[LIQUIDITY]:</span> ${data.liquidity}
@@ -144,7 +149,6 @@ export default function RugCheckerUI() {
                 <span style={{ color: '#00ff00' }}>[STATUS]:</span> <span style={{ fontWeight: 'bold' }}>{data.status}</span>
               </div>
               
-              {/* زر المشاركة الفعال */}
               <button 
                 onClick={shareOnTwitter}
                 style={{ 
