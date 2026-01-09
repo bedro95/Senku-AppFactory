@@ -28,7 +28,7 @@ export default function RugCheckerUI() {
           price: pair.priceUsd,
           liquidity: pair.liquidity.usd.toLocaleString(),
           volume: pair.volume.h24.toLocaleString(),
-          status: "SAFE_NEURAL_CHECK"
+          status: "SAFE_SENKU_CHECK"
         });
       } else {
         setData({ 
@@ -39,7 +39,7 @@ export default function RugCheckerUI() {
     } catch (err) {
       setData({ 
         status: "ERROR", 
-        details: "Neural link failed. Please check your connection." 
+        details: "senku link failed. Please check your connection." 
       });
     } finally {
       setLoading(false);
@@ -50,7 +50,7 @@ export default function RugCheckerUI() {
   const shareOnTwitter = () => {
     if (!data || data.status === "ERROR") return;
 
-    const text = `🧪 SENKU NEURAL REPORT:\n\n💎 Token: ${data.name} ($${data.symbol})\n💰 Liquidity: $${data.liquidity}\n🛡️ Status: ${data.status}\n\nScan securely at:`;
+    const text = `🧪 SENKU FACTORY REPORT:\n\n💎 Token: ${data.name} ($${data.symbol})\n💰 Liquidity: $${data.liquidity}\n🛡️ Status: ${data.status}\n\nScan securely at:`;
     const url = "https://senku-app-factory.vercel.app/";
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
     window.open(twitterUrl, '_blank');
@@ -76,7 +76,7 @@ export default function RugCheckerUI() {
         letterSpacing: '3px',
         textTransform: 'uppercase'
       }}>
-        NEURAL SCANNER
+        SENKU FACTORY SCANNER
       </h2>
       
       {/* حقل الإدخال */}
@@ -146,7 +146,7 @@ export default function RugCheckerUI() {
               
               {/* زر المشاركة الفعال */}
               <button 
-                onClick={shareOnTwitter}
+                onClick={shareOnX}
                 style={{ 
                   width: '100%', 
                   padding: '12px', 
@@ -163,7 +163,7 @@ export default function RugCheckerUI() {
                   gap: '8px'
                 }}
               >
-                𝕏 SHARE NEURAL REPORT
+                𝕏 SHARE SENKU FACTORY REPORT
               </button>
             </>
           ) : (
