@@ -6,7 +6,7 @@ export default function RugCheckerUI() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
 
-  // دالة الفحص الحقيقي من سولانا
+  // دالة الفحص الحقيقي من سولانا باستخدام محرك Senku Factory
   const performScan = async () => {
     if (!address || address.length < 32) {
       alert("Please enter a valid Solana contract address.");
@@ -21,7 +21,7 @@ export default function RugCheckerUI() {
       const pair = res.data.pairs ? res.data.pairs[0] : null;
 
       if (pair) {
-        // تخزين البيانات للتأكد من ظهورها في الموقع والمشاركة
+        // تخزين البيانات للتأكد من ظهورها في واجهة Senku Factory والمشاركة
         setData({
           name: pair.baseToken.name,
           symbol: pair.baseToken.symbol,
@@ -33,20 +33,20 @@ export default function RugCheckerUI() {
       } else {
         setData({ 
           status: "ERROR", 
-          details: "Token found but no liquidity pairs detected on-chain." 
+          details: "Token found but no liquidity pairs detected by Senku Factory." 
         });
       }
     } catch (err) {
       setData({ 
         status: "ERROR", 
-        details: "senku link failed. Please check your connection." 
+        details: "Senku Factory link failed. Please check your connection." 
       });
     } finally {
       setLoading(false);
     }
   };
 
-  // دالة المشاركة على تويتر
+  // دالة المشاركة على تويتر باسم Senku Factory
   const shareOnTwitter = () => {
     if (!data || data.status === "ERROR") return;
 
@@ -67,7 +67,7 @@ export default function RugCheckerUI() {
       boxShadow: '0 0 50px rgba(0,255,0,0.15)',
       fontFamily: 'monospace'
     }}>
-      {/* العنوان */}
+      {/* العنوان المحدث */}
       <h2 style={{ 
         color: '#00ff00', 
         textAlign: 'center', 
@@ -76,7 +76,7 @@ export default function RugCheckerUI() {
         letterSpacing: '3px',
         textTransform: 'uppercase'
       }}>
-        SENKU FACTORY SCANNER
+        SENKU FACTORY
       </h2>
       
       {/* حقل الإدخال */}
@@ -117,10 +117,10 @@ export default function RugCheckerUI() {
           boxShadow: loading ? 'none' : '0 0 20px rgba(0,255,0,0.4)'
         }}
       >
-        {loading ? "DECRYPTING..." : "EXECUTE SCAN"}
+        {loading ? "SCANNING CORE..." : "EXECUTE SENKU SCAN"}
       </button>
 
-      {/* منطقة النتائج */}
+      {/* منطقة النتائج الفعالة */}
       {data && (
         <div style={{ 
           marginTop: '25px', 
@@ -146,7 +146,7 @@ export default function RugCheckerUI() {
               
               {/* زر المشاركة الفعال */}
               <button 
-                onClick={shareOnX}
+                onClick={shareOnTwitter}
                 style={{ 
                   width: '100%', 
                   padding: '12px', 
@@ -163,7 +163,7 @@ export default function RugCheckerUI() {
                   gap: '8px'
                 }}
               >
-                𝕏 SHARE SENKU FACTORY REPORT
+                𝕏 SHARE SENKU REPORT
               </button>
             </>
           ) : (
