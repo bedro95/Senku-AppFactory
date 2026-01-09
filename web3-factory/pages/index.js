@@ -6,7 +6,8 @@
 
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import RugCheckerUI from '../components/RugCheckerUI';
+import RugCheckerUI from '../components/RugCheckerUI.jsx';
+
 
 export default function Home() {
   // Logic for the Snow System (Original Code 1)
